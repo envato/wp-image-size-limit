@@ -25,12 +25,20 @@ function wpisl_options_init() {
 		'wpisl_options_validate' // The sanitization callback, see wpisl_options_validate()
 	);
 
-	add_settings_field( 
-		'img_upload_limit', 
-		'Maximum File Size for Images', 
-		'wpisl_settings_field_img_upload_limit', 
-		'media', 
-		'uploads' 
+	add_settings_field(
+		'img_upload_limit',
+		'Maximum File Size for Images',
+		'wpisl_settings_field_img_upload_limit',
+		'media',
+		'uploads'
+	);
+
+	add_settings_field(
+		'img_upload_limit_types_regex',
+		'MIME types regex pattern of media files where the upload limit is enforced',
+		'wpisl_settings_field_img_upload_limit_types_regex',
+		'media',
+		'uploads'
 	);
 }
 add_action( 'admin_init', 'wpisl_options_init' );
@@ -46,6 +54,7 @@ function wpisl_get_default_options() {
 	$limit = $wpisl->wp_limit();
 	$default_options = array(
 		'img_upload_limit' => $limit,
+		'img_upload_limit_types_regex' => '/^image\//',
 	);
 
 	return apply_filters( 'wpisl_default_options', $default_options );
@@ -78,7 +87,7 @@ function wpisl_settings_field_img_upload_limit() {
 
 		if ( isset($options[$id]) && ($options[$id] < $limit) ) {
 			$value = $options[$id];
-		} 
+		}
 		/*elseif  ( empty($options[$id])  )  {
 			$value = '1000';
 		} */
@@ -91,6 +100,28 @@ function wpisl_settings_field_img_upload_limit() {
 			<br>
 			<span class="description">Server maximum: '.$limit.' KB</span>
 		</p>';
+
+	echo $field;
+
+}
+
+function wpisl_settings_field_img_upload_limit_types_regex() {
+	$options = wpisl_get_options();
+	$id = 'img_upload_limit_types_regex';
+
+	if ( isset($options[$id]) ) {
+		$value = $options[$id];
+	}
+	else {
+		$value = '/^image\//';
+	}
+
+	$field = '<p>
+		<input name="wpisl_options[' . $id . ']' . '" id="wpisl-limit-type" type="text" value="' . $value . '" size="20" maxlength="100" />
+		<br/>
+		<a href="http://php.net/manual/en/reference.pcre.pattern.syntax.php">Regex Pattern Reference</a>
+		<br/><span class="hint">Use <code>/^image\//</code> to match all image types</span>
+	</p>';
 
 	echo $field;
 

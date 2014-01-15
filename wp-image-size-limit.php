@@ -15,10 +15,10 @@ require_once ('wpisl-options.php');
 
 class WP_Image_Size_Limit {
 
-	public function __construct()  {  
+	public function __construct()  {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array($this, 'add_plugin_links') );
 			add_filter('wp_handle_upload_prefilter', array($this, 'error_message'));
-	}  
+	}
 
 	public function add_plugin_links( $links ) {
 		return array_merge(
@@ -77,16 +77,21 @@ class WP_Image_Size_Limit {
 
 	}
 
+	public function is_limited_type($type) {
+		$options = get_option('wpisl_options');
+		$pattern = $options['img_upload_limit_types_regex'];
+		return preg_match($pattern, $type);
+	}
+
 	public function error_message($file) {
 		$size = $file['size'];
 		$size = $size / 1024;
 		$type = $file['type'];
-		$is_image = strpos($type, 'image');
 		$limit = $this->get_limit();
 		$limit_output = $this->output_limit();
 		$unit = $this->limit_unit();
 
-	  if ( ( $size > $limit ) && ($is_image !== false) ) {
+	  if ( ( $size > $limit ) && ($this->is_limited_type($type) !== false) ) {
 	     $file['error'] = 'Image files must be smaller than '.$limit_output.$unit;
 	     if (WPISL_DEBUG) {
 	     	$file['error'] .= ' [ filesize = '.$size.', limit ='.$limit.' ]';
