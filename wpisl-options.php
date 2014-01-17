@@ -146,6 +146,9 @@ function wpisl_options_validate( $input ) {
 		$output['img_upload_limit'] = $limit;
 	}
 
+	// TODO: verify regex, maybe?
+	$output['img_upload_limit_types_regex'] = $input['img_upload_limit_types_regex'];
+
 	return apply_filters( 'wpisl_options_validate', $output, $input, $defaults );
 }
 
