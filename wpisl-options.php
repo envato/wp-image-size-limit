@@ -117,7 +117,7 @@ function wpisl_settings_field_img_upload_limit_types_regex() {
 	}
 
 	$field = '<p>
-		<input name="wpisl_options[' . $id . ']' . '" id="wpisl-limit-type" type="text" value="' . $value . '" size="20" maxlength="100" />
+		<input name="wpisl_options[' . $id . ']' . '" id="wpisl-limit-type" type="text" value="' . $value . '" size="80" />
 		<br/>
 		<a href="http://php.net/manual/en/reference.pcre.pattern.syntax.php">Regex Pattern Reference</a>
 		<br/><span class="hint">Use <code>/^image\//</code> to match all image types</span>
