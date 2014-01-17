@@ -91,7 +91,7 @@ class WP_Image_Size_Limit {
 		$limit_output = $this->output_limit();
 		$unit = $this->limit_unit();
 
-	  if ( ( $size > $limit ) && ($this->is_limited_type($type) !== false) ) {
+	  if ( ( $size > $limit ) && ($this->is_limited_type($type)) ) {
 	     $file['error'] = 'Image files must be smaller than '.$limit_output.$unit;
 	     if (WPISL_DEBUG) {
 	     	$file['error'] .= ' [ filesize = '.$size.', limit ='.$limit.' ]';
