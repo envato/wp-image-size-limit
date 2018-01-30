@@ -13,3 +13,13 @@ limitation to "image/png", "image/jpeg", "image/foobar", but not
 "application/something".
 
 [regular expression pattern]: http://php.net/manual/en/reference.pcre.pattern.syntax.php
+
+## Localization Support
+
+Added localization support using Wordpress PO/MO system. Language supported by now:
+* English
+* Italian
+
+You can compile your own language using [Poedit] and the included .pot file.
+
+[Poedit]: https://poedit.net/
