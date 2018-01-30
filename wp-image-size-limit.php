@@ -6,6 +6,7 @@
 	Author: Sean Butze
 	Author URI: http://www.seanbutze.com
 	Version: 1.0.4
+	Text Domain: wp-image-size-limit
 	*/
 	
 	
@@ -18,6 +19,11 @@
 		public function __construct() {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_plugin_links' ) );
 			add_filter( 'wp_handle_upload_prefilter', array( $this, 'error_message' ) );
+			add_action( 'plugins_loaded', array( $this, 'load_text_domain' ) );
+		}
+		
+		public function load_text_domain() {
+            load_plugin_textdomain( 'wp-image-size-limit', false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 		
 		public function add_plugin_links( $links ) {
@@ -92,9 +98,9 @@
 			$unit         = $this->limit_unit();
 			
 			if ( ( $size > $limit ) && ( $this->is_limited_type( $type ) ) ) {
-				$file[ 'error' ] = 'Image files must be smaller than ' . $limit_output . $unit;
+				$file[ 'error' ] = __( 'Image files must be smaller than', 'wp-image-size-limit' ) . ' ' . $limit_output . $unit;
 				if ( WPISL_DEBUG ) {
-					$file[ 'error' ] .= ' [ filesize = ' . $size . ', limit =' . $limit . ' ]';
+					$file[ 'error' ] .= ' [ ' . __( 'filesize', 'wp-image-size-limit' ) . ' = ' . $size . ', ' . __( 'limit', 'wp-image-size-limit' ) . ' =' . $limit . ' ]';
 				}
 			}
 			
@@ -118,7 +124,7 @@
 
                 <?php if ( $limit < $wplimit ) : ?>
                 .upload-flash-bypass:after {
-                    content: 'Maximum image size: <?php echo $limit_output . $unit; ?>.';
+                    content: '<?php echo __('Maximum image size','wp-image-size-limit').': '.$limit_output . $unit; ?>.';
                     display: block;
                     margin: 15px 0;
                 }

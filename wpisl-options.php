@@ -28,7 +28,7 @@
 		
 		add_settings_field(
 			'img_upload_limit',
-			'Maximum File Size for Images',
+			__( 'Maximum File Size for Images', 'wp-image-size-limit' ),
 			'wpisl_settings_field_img_upload_limit',
 			'media',
 			'uploads'
@@ -36,7 +36,7 @@
 		
 		add_settings_field(
 			'img_upload_limit_types_regex',
-			'MIME types regex pattern of media files where the upload limit is enforced',
+			__( 'MIME types regex pattern of media files where the upload limit is enforced', 'wp-image-size-limit' ),
 			'wpisl_settings_field_img_upload_limit_types_regex',
 			'media',
 			'uploads'
@@ -99,7 +99,7 @@
 		$field = '<p>
 			<input name="wpisl_options[' . $id . ']' . '" id="wpisl-limit" type="text" value="' . $value . '" size="4" maxlength="5" /> KB
 			<br>
-			<span class="description">Server maximum: ' . $limit . ' KB</span>
+			<span class="description">' . __( 'Server maximum', 'wp-image-size-limit' ) . ': ' . $limit . ' KB</span>
 		</p>';
 		
 		echo $field;
@@ -119,8 +119,8 @@
 		$field = '<p>
 		<input name="wpisl_options[' . $id . ']' . '" id="wpisl-limit-type" type="text" value="' . $value . '" size="80" />
 		<br/>
-		<a href="http://php.net/manual/en/reference.pcre.pattern.syntax.php">Regex Pattern Reference</a>
-		<br/><span class="hint">Use <code>/^image\//</code> to match all image types</span>
+		<a href="http://php.net/manual/en/reference.pcre.pattern.syntax.php">' . _x( 'Regex Pattern Reference', 'Regex PHP site link', 'wp-image-size-limit' ) . '</a>
+		<br/><span class="hint">' . sprintf( _x( 'Use %s to match all image types', '%s is replace by <code>/^image\//</code>', 'wp-image-size-limit' ), '<code>/^image\//</code>' ) . '</span>
 	</p>';
 		
 		echo $field;
